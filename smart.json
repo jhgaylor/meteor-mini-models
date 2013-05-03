@@ -1,0 +1,10 @@
+{
+  "name": "mini-models",
+  "description": "Simple models for meteor",
+  "homepage": "https://github.com/EmmN/meteor-mini-models",
+  "author": "Emanuel Nedelcu",
+  "version": "0.0.1",
+  "git": "https://github.com/EmmN/meteor-mini-models.git",
+  "packages": {
+  }
+}
