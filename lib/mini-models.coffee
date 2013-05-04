@@ -35,7 +35,8 @@ class @MiniModel
           message = field + " error"  unless message
           self.addError field, message  unless rule(self[field])
           
-    true  if _.isEmpty(self.errors)
+    return true  if _.isEmpty(self.errors)
+    false
     
   resetErrors: ->
     self = this
