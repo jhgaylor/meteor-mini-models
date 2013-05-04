@@ -7,9 +7,11 @@ Latest version: **0.0.2**
 
 ## Install
 To install in a new project:
+
     > mrt add mini-models
 
 To update an existing project:
+
     > mrt update mini-models
 
 ## Defining models
