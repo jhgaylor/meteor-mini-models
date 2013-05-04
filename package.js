@@ -3,8 +3,8 @@ Package.describe({
 });
 
 Package.on_use(function (api, where) {
-  api.use("underscore", ['client', 'server']);
-  api.add_files('lib/mini-models.js', ['client', 'server']);
+  api.use(["underscore", "coffeescript"], ['client', 'server']);
+  api.add_files('lib/mini-models.coffee', ['client', 'server']);
 });
 
 Package.on_test(function (api) {
