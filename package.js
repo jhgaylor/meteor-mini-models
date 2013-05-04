@@ -3,6 +3,7 @@ Package.describe({
 });
 
 Package.on_use(function (api, where) {
+  api.use("underscore", ['client', 'server']);
   api.add_files('lib/mini-models.js', ['client', 'server']);
 });
 
