@@ -1,7 +1,7 @@
 meteor-mini-models
 ==================
 
-Simple models for meteor
+Simple models for meteor inspired by [http://www.eventedmind.com/posts/meteor-transforming-collection-documents] (http://www.eventedmind.com/posts/meteor-transforming-collection-documents "http://www.eventedmind.com/posts/meteor-transforming-collection-documents")
 
 Latest version: **0.0.2**
 
@@ -92,7 +92,7 @@ Collection definition:
 
 
 ## DEMO SAMPLE APP
-[https://github.com/EmmN/meteor-mini-models-sample-app] https://github.com/EmmN/meteor-mini-models-sample-app
+[https://github.com/EmmN/meteor-mini-models-sample-app] (https://github.com/EmmN/meteor-mini-models-sample-app "https://github.com/EmmN/meteor-mini-models-sample-app")
 
 
 ## TO DO
