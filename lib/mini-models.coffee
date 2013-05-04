@@ -1,17 +1,28 @@
 class @MiniModel
-  constructor: (doc, collectionName, validations) ->
-    _.extend this, doc, {
-      _collectionName: collectionName || "", 
-      _validations:    validations || [],
-      _sessionUUID:    doc._id || Meteor.uuid()
-    }
-    
-  collection: ->
-    @_collection ||= eval(@_collectionName)
+  # CLASS METHODS
+  @collection: ->
+    @_collection ||= eval(@collectionName)
+  
+  @hasErrors: (field, uuid) ->
+    @getErrors(field, uuid) && @getErrors(field, uuid).length > 0
+  
+  @getErrors: (field, uuid) ->
+    allErrors = Session.get("#{@collectionName}:errors:#{uuid}") || {}
+    return allErrors[field] if field
+    allErrors 
+  
+  @setErrors: (errors, uuid) ->
+    errors ||= {}
+    Session.set("#{@collectionName}:errors:#{uuid}", errors)
+  
+  
+  # OBJECT METHODS
+  constructor: (doc) ->
+    _.extend this, doc
   
   isValid: ->
     @setErrors({})
-    _.each @_validations, (validationRule) =>
+    _.each @__proto__.constructor.validations, (validationRule) =>
       _.each validationRule, (validation, field) =>
         rule = validation.rule || validation
         message = validation.message
@@ -33,27 +44,30 @@ class @MiniModel
           
     return true  if _.isEmpty(@getErrors())
     false
-    
+  
   hasErrors: (field) ->
-    @getErrors(field) && @getErrors(field).length > 0
-  getErrors: (field)->
-    allErrors = Session.get("errors_#{@_sessionUUID}") || {}
-    return allErrors[field] if field
-    allErrors 
-  setErrors: (errors)->
-    errors ||= {}
-    Session.set("errors_#{@_sessionUUID}", errors)
+    @__proto__.constructor.hasErrors(field, @_id)
+    
+  getErrors: (field) ->
+    @__proto__.constructor.getErrors(field, @_id)
+    
+  setErrors: (errors) ->
+    @__proto__.constructor.setErrors(errors, @_id)
+    
   addError: (field, message) ->
     errors = @getErrors()
     errors[field] ||= []
     errors[field].push message
     @setErrors(errors)
+    
   notEmpty: (field) ->
     return false  if _.isEmpty(field)
     true
+    
   maxLength: (field, length) ->
     return false  if field.length > length
     true
+    
   minLength: (field, length) ->
     return false  if field.length < length
     true
@@ -64,9 +78,9 @@ class @MiniModel
     data = _.extend({}, @)
     if data._id
       delete data._id
-      @collection().update @_id, data
+      @__proto__.constructor.collection().update @_id, data
     else
-      @collection().insert data
+      @__proto__.constructor.collection().insert data
 
   destroy: ->
-    @collection().remove @_id
+    @__proto__.constructor.collection().remove @_id
