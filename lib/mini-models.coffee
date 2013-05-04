@@ -4,7 +4,7 @@ class @MiniModel
     _.extend self, doc, {
       _collectionName: collectionName || "", 
       _validations:    validations || [],
-      _sessionUUID:    Meteor.uuid()
+      _sessionUUID:    doc._id || Meteor.uuid()
     }
     
   collection: ->
@@ -38,8 +38,14 @@ class @MiniModel
     return true  if _.isEmpty(self.getErrors())
     false
     
-  getErrors: ->
-    Session.get("errors_#{self.sessionUUID}")
+  hasErrors: (field) ->
+    self = this
+    self.getErrors(field) && self.getErrors(field).length > 0
+  getErrors: (field)->
+    self = this
+    allErrors = Session.get("errors_#{self.sessionUUID}") || {}
+    return allErrors[field] if field
+    allErrors 
   setErrors: (errors)->
     self = this
     errors ||= {}
