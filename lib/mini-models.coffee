@@ -1,10 +1,10 @@
 class @MiniModel
-  errors: {}
   constructor: (doc, collectionName, validations) ->
     self = this
     _.extend self, doc, {
       _collectionName: collectionName || "", 
-      _validations:    validations || []
+      _validations:    validations || [],
+      _sessionUUID:    Meteor.uuid()
     }
     
   collection: ->
@@ -14,7 +14,7 @@ class @MiniModel
   
   isValid: ->
     self = this
-    self.resetErrors()
+    self.setErrors({})
     _.each self._validations, (validationRule) ->
       _.each validationRule, (validation, field) ->
         rule = validation.rule || validation
@@ -35,16 +35,21 @@ class @MiniModel
           message = field + " error"  unless message
           self.addError field, message  unless rule(self[field])
           
-    return true  if _.isEmpty(self.errors)
+    return true  if _.isEmpty(self.getErrors())
     false
     
-  resetErrors: ->
+  getErrors: ->
+    Session.get("errors_#{self.sessionUUID}")
+  setErrors: (errors)->
     self = this
-    self.errors = {}
+    errors ||= {}
+    Session.set("errors_#{self.sessionUUID}", errors)
   addError: (field, message) ->
     self = this
-    self.errors[field] ||= []
-    self.errors[field].push message
+    errors = self.getErrors()
+    errors[field] ||= []
+    errors[field].push message
+    self.setErrors(errors)
   notEmpty: (field) ->
     return false  if _.isEmpty(field)
     true
