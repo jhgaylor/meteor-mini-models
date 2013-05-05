@@ -118,4 +118,3 @@ Predefined validation methods:
 
 ## Demo sample app
 [https://github.com/EmmN/meteor-mini-models-sample-app] (https://github.com/EmmN/meteor-mini-models-sample-app "https://github.com/EmmN/meteor-mini-models-sample-app")
-
