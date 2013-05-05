@@ -3,7 +3,7 @@ meteor-mini-models
 
 Simple models for meteor inspired by [http://www.eventedmind.com/posts/meteor-transforming-collection-documents] (http://www.eventedmind.com/posts/meteor-transforming-collection-documents "http://www.eventedmind.com/posts/meteor-transforming-collection-documents")
 
-Latest version: **0.0.2**
+Latest version: **0.1.0**
 
 ## Install
 To install in a new project:
@@ -100,10 +100,10 @@ Collection definition:
 
 ## Model Methods
 
-- save - save model data
-- destroy - delete model from collection
-- hasErrors - returns if there were any errors during a save. (in case field is provided it checks errors only for that field)
-- getErrors - returns all the errors that appeared during a save. (in case field is provided returns only the errors for that specific field)
+- **save** - save model data
+- **destroy** - delete model from collection
+- **hasErrors** - returns if there were any errors during a save. (in case field is provided it checks errors only for that field)
+- **getErrors** - returns all the errors that appeared during a save. (in case field is provided returns only the errors for that specific field)
 
 ## Validations
 See sample app for examples on how to use different types of validations. Fields can be validated using one of the predefined validation methods or by writing your own validation methods.
@@ -112,9 +112,9 @@ All validation errors are saved in Session so we can take advantage of Meteor's 
 
 Predefined validation methods:
 
-- notEmpty
-- maxLength
-- minLength
+- **notEmpty**
+- **maxLength**
+- **minLength**
 
 ## Demo sample app
 [https://github.com/EmmN/meteor-mini-models-sample-app] (https://github.com/EmmN/meteor-mini-models-sample-app "https://github.com/EmmN/meteor-mini-models-sample-app")
