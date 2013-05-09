@@ -3,17 +3,18 @@ class @MiniModel
   @collection: ->
     @_collection ||= eval(@collectionName)
   
-  @hasErrors: (uuid, field) ->
-    !_.isEmpty @getErrors(uuid, field)
+  @hasErrors: (options) ->
+    !_.isEmpty @getErrors(options)
   
-  @getErrors: (uuid, field) ->
-    allErrors = Session.get("#{@collectionName}:errors:#{uuid}") || {}
-    return allErrors[field] || [] if field
+  @getErrors: (options) ->
+    options = {field: options}  if !_.isObject options
+    allErrors = Session.get("#{@collectionName}:errors:#{options.uuid}") || {}
+    return allErrors[options.field] || [] if options.field
     allErrors 
   
-  @setErrors: (uuid, errors) ->
-    errors ||= {}
-    Session.set("#{@collectionName}:errors:#{uuid}", errors)
+  @setErrors: (options) ->
+    options.errors ||= {}
+    Session.set("#{@collectionName}:errors:#{options.uuid}", options.errors)
   
   
   # OBJECT METHODS
@@ -47,13 +48,13 @@ class @MiniModel
     false
   
   hasErrors: (field) ->
-    @__proto__.constructor.hasErrors(@_id, field)
+    @__proto__.constructor.hasErrors { uuid: @_id, field: field }
     
   getErrors: (field) ->
-    @__proto__.constructor.getErrors(@_id, field)
+    @__proto__.constructor.getErrors { uuid: @_id, field: field }
     
   setErrors: (errors) ->
-    @__proto__.constructor.setErrors(@_id, errors)
+    @__proto__.constructor.setErrors { uuid: @_id, errors: errors }
     
   addError: (field, message) ->
     errors = @getErrors()

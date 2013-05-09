@@ -86,4 +86,14 @@ Tinytest.add 'model.destroy', withCleanup (test) ->
   todo.destroy()
   test.isUndefined Todos.findOne()
   
+Tinytest.add 'ModelClass.hasErrors', withCleanup (test) -> 
+  todo = new Todo
+  todo.isValid()
+  test.isTrue Todo.hasErrors()
+  test.isTrue Todo.hasErrors("title")
   
+Tinytest.add 'ModelClass.getErrors', withCleanup (test) -> 
+  todo = new Todo
+  todo.isValid()
+  test.isFalse _.isEmpty Todo.getErrors().title
+  test.equal Todo.getErrors("title").length, 4
