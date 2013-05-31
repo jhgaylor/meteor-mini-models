@@ -3,7 +3,7 @@ meteor-mini-models
 
 Simple models for meteor inspired by [http://www.eventedmind.com/posts/meteor-transforming-collection-documents] (http://www.eventedmind.com/posts/meteor-transforming-collection-documents "http://www.eventedmind.com/posts/meteor-transforming-collection-documents")
 
-Latest version: **0.1.1**
+Latest version: **0.1.2**
 
 ## Install
 To install in a new project:
