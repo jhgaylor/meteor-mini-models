@@ -79,12 +79,21 @@ class @MiniModel
   save: ->
     return false  unless @isValid()
     
+    @_applyCallback("beforeSave")
     data = _.extend({}, @)
     if data._id
       delete data._id
       @__proto__.constructor.collection().update @_id, data
     else
       @_id = @__proto__.constructor.collection().insert data
+    @_applyCallback("afterSave")
 
   destroy: ->
+    @_applyCallback("beforeDestroy")
     @__proto__.constructor.collection().remove @_id
+    @_applyCallback("afterDestroy")
+    
+  _applyCallback: (callback)->
+    _.each @__proto__.constructor[callback] || [], (cbck) =>
+      cbck(@)
+      

@@ -40,6 +40,17 @@ Model Definition:
           message:  'Title must contain "."'
         }
       ]
+      @beforeSave: [
+        (todo) ->
+          todo.beforeData = "before"
+        (todo) ->
+          todo.beforeData2 = "before2"
+      ]
+      @afterSave: [
+        (todo) ->
+          todo.afterData = "after"
+      ]
+
 
 Collection definition:
 
@@ -48,55 +59,7 @@ Collection definition:
         new Todo doc
 
 ### Javascript:
-Model definition:
-
-    var __hasProp = {}.hasOwnProperty,
-      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-    
-    this.Todo = (function(_super) {
-    
-      __extends(Todo, _super);
-    
-      function Todo() {
-        return Todo.__super__.constructor.apply(this, arguments);
-      }
-    
-      Todo.collectionName = "Todos";
-    
-      Todo.validations = [
-        {
-          title: 'notEmpty'
-        }, {
-          title: ['minLength', 5]
-        }, {
-          title: {
-            rule: ['maxLength', 50],
-            message: 'Title can not be longer than 50 chars'
-          }
-        }, {
-          title: {
-            rule: function(field) {
-              if (_.indexOf(field, ".") === -1) {
-                return false;
-              }
-              return true;
-            },
-            message: 'Title must contain "."'
-          }
-        }
-      ];
-    
-      return Todo;
-    
-    })(MiniModel);
-
-Collection definition:
-
-    this.Todos = new Meteor.Collection("todos", {
-      transform: function(doc) {
-        return new Todo(doc);
-      }
-    });
+[http://js2coffee.org/] (http://js2coffee.org/ "http://js2coffee.org/") can be used to convert the coffeescript code to javascript code.
 
 ## Model Methods
 
@@ -104,6 +67,13 @@ Collection definition:
 - **destroy** - delete model from collection
 - **hasErrors** - returns if there were any errors during a save. (in case field is provided it checks errors only for that field)
 - **getErrors** - returns all the errors that appeared during a save. (in case field is provided returns only the errors for that specific field)
+
+## Model Callbacks
+
+- **beforeSave** - callback run before saving a model
+- **afterSave** - callback run after saving a model
+- **beforeDestroy** - callback run before destroying a model
+- **afterDestroy** - callback run after destroying a model
 
 ## Validations
 See sample app for examples on how to use different types of validations. Fields can be validated using one of the predefined validation methods or by writing your own validation methods.

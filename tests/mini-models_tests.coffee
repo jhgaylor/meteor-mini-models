@@ -15,12 +15,33 @@ class @Todo extends MiniModel
       message:  'Title must contain "."'
     }
   ]
+  @beforeSave: [
+    (todo) ->
+      todo.beforeData = "before"
+    (todo) ->
+      todo.beforeData2 = "before2"
+  ]
+  @afterSave: [
+    (todo) ->
+      todo.afterData = "after"
+  ]
+  @beforeDestroy: [
+    (todo) ->
+      Arr1.push Todos.find(todo._id).fetch()[0] if Todos.find(todo._id).fetch()[0]
+  ]
+  @afterDestroy: [
+    (todo) ->
+      Arr2.push Todos.find(todo._id).fetch()[0] if Todos.find(todo._id).fetch()[0]
+  ]
+
   
 @Todos = new Meteor.Collection "todos",
   transform: (doc) ->
     new Todo doc
     
 cleanupTodos = ->
+  @Arr1 = []
+  @Arr2 = []
   _.each Todos.find().fetch(), (todo) ->
     Todos.remove todo._id
 
@@ -97,3 +118,39 @@ Tinytest.add 'ModelClass.getErrors', withCleanup (test) ->
   todo.isValid()
   test.isFalse _.isEmpty Todo.getErrors().title
   test.equal Todo.getErrors("title").length, 4
+
+Tinytest.add 'model beforeSave', withCleanup (test) ->
+  todo = new Todo {title: "This is the title."}
+  test.isUndefined todo.beforeData
+  todo.save()
+  test.equal todo.beforeData, "before"
+  test.equal todo.beforeData2, "before2"
+  t = Todos.findOne()
+  test.equal t.beforeData, "before"
+  test.equal t.beforeData2, "before2"
+
+Tinytest.add 'model afterSave', withCleanup (test) ->
+  todo = new Todo {title: "This is the title."}
+  test.isUndefined todo.afterData
+  todo.save()
+  test.equal todo.afterData, "after"
+  t = Todos.findOne()
+  test.isUndefined t.afterData
+  
+Tinytest.add 'model beforeDestroy', withCleanup (test) ->
+  todo = new Todo {title: "This is the title."}
+  todo.save()
+  t = Todos.findOne()
+  test.equal Arr1, []
+  todo.destroy()
+  test.equal Arr1, [t]
+
+Tinytest.add 'model afterDestroy', withCleanup (test) ->
+  todo = new Todo {title: "This is the title."}
+  todo.save()
+  t = Todos.findOne()
+  test.equal Arr2, []
+  todo.destroy()
+  test.equal Arr2, []
+
+
