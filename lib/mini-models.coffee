@@ -2,19 +2,21 @@ class @MiniModel
   # CLASS METHODS
   @collection: ->
     @_collection ||= eval(@collectionName)
-  
+
   @hasErrors: (options) ->
     !_.isEmpty @getErrors(options)
-  
+
   @getErrors: (options) ->
     options = {field: options}  if !_.isObject options
-    allErrors = Session.get("#{@collectionName}:errors:#{options.uuid}") || {}
-    return allErrors[options.field] || [] if options.field
-    allErrors 
+    if Session
+      allErrors = Session.get("#{@collectionName}:errors:#{options.uuid}") || {}
+      return allErrors[options.field] || [] if options.field
+      allErrors
   
   @setErrors: (options) ->
     options.errors ||= {}
-    Session.set("#{@collectionName}:errors:#{options.uuid}", options.errors)
+    if Session
+      Session.set("#{@collectionName}:errors:#{options.uuid}", options.errors)
   
   
   # OBJECT METHODS

@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "Simple models for meteor"
+  summary: "Simple models for meteor."
 });
 
 Package.on_use(function (api, where) {
