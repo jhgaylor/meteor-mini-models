@@ -7,7 +7,7 @@ Package.on_use(function (api, where) {
   api.add_files('lib/mini-models.coffee', ['client', 'server']);
 });
 
-Package.on_test(function (api) {
-  api.use(['mini-models', 'tinytest'], ['client', 'server']);
-  api.add_files('tests/mini-models_tests.coffee', 'client');
-});
+// Package.on_test(function (api) {
+//   api.use(['mini-models', 'tinytest'], ['client', 'server']);
+//   api.add_files('tests/mini-models_tests.coffee', 'client');
+// });
