@@ -1,9 +1,9 @@
 {
   "name": "mini-models-no-session",
   "description": "Simple models for meteor",
-  "homepage": "https://github.com/jhgaylor/meteor-mini-models-no-session",
+  "homepage": "https://github.com/jhgaylor/meteor-mini-models",
   "author": "Jake Gaylor",
-  "version": "0.1.41",
+  "version": "0.1.42",
   "git": "https://github.com/jhgaylor/meteor-mini-models.git",
   "packages": {
   }
