@@ -3,7 +3,7 @@
   "description": "Simple models for meteor",
   "homepage": "https://github.com/jhgaylor/meteor-mini-models",
   "author": "Jake Gaylor",
-  "version": "0.1.44",
+  "version": "0.1.45",
   "git": "https://github.com/jhgaylor/meteor-mini-models.git",
   "packages": {
   }

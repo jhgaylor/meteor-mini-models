@@ -7,16 +7,10 @@ class @MiniModel
     !_.isEmpty @getErrors(options)
 
   @getErrors: (options) ->
-    options = {field: options}  if !_.isObject options
-    if Session
-      allErrors = Session.get("#{@collectionName}:errors:#{options.uuid}") || {}
-      return allErrors[options.field] || [] if options.field
-      allErrors
+    return []
   
   @setErrors: (options) ->
-    options.errors ||= {}
-    if Session
-      Session.set("#{@collectionName}:errors:#{options.uuid}", options.errors)
+    return
   
   
   # OBJECT METHODS
